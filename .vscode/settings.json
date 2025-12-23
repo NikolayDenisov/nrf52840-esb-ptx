@@ -1,0 +1,32 @@
+{
+    "files.associations": {
+        "nrf52840.h": "c",
+        "system_nrf52.h": "c",
+        "system_nrf52_approtect.h": "c",
+        "nrf.h": "c",
+        "bsp.h": "c",
+        "nrf_delay.h": "c",
+        "app_error.h": "c",
+        "nrf_uart.h": "c",
+        "nrf_uarte.h": "c",
+        "stdio.h": "c",
+        "stdint.h": "c",
+        "nrf52840_bitfields.h": "c",
+        "hdc2080.h": "c",
+        "nrf_drv_twi.h": "c",
+        "stdbool.h": "c",
+        "uart.h": "c",
+        "twi.h": "c",
+        "dev_config.h": "c",
+        "nrf_gpio.h": "c",
+        "gpio.h": "c",
+        "type_traits": "c",
+        "nrf_drv_gpiote.h": "c",
+        "sht4x_example.h": "c",
+        "time.h": "c",
+        "driver_sht4x.h": "c"
+    },
+    "nrf-connect.topdir": "${nrf-connect.sdk:2.6.1}",
+    "cortex-debug.variableUseNaturalFormat": false,
+    "git.ignoreLimitWarning": true
+}

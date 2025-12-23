@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ Launch",
+            "type": "cortex-debug",
+            "request": "launch",
+            "executable": "${workspaceRoot}/armgcc/_build/nrf52840_xxaa.out",
+            "cwd": "${workspaceRoot}",
+            "preLaunchTask": "make",
+            "servertype": "pyocd",
+            "runToEntryPoint": "main",
+            "targetId": "nrf52840",
+            "armToolchainPath": "/Applications/ARM/bin/",
+            "debugServer": "pyocd-gdbserver",
+            "serverArgs": [
+                "--target",
+                "nrf52840",
+                "--elf",
+                "${workspaceRoot}/armgcc/_build/nrf52840_xxaa.out",
+            ],
+            "svdFile": "${workspaceFolder}/nrf52840.svd"
+        }
+    ]
+}

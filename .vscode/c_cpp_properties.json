@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "customConfigurationVariables": {
+                "SDK_ROOT": "myvalue"
+            },
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/components/libraries",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/components/libraries/delay",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/modules/nrfx/hal",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/modules/nrfx/mdk",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/integration/nrfx/legacy/",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/components/libraries/bsp",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/components/libraries/util",
+                "/Users/nick/projects/iot/nRF5_SDK_17.1.0_ddde560/components/libraries/uart",
+                "${workspaceFolder}/display/Config"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "compilerPath": "/Applications/ARM/bin/arm-none-eabi-gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-arm64"
+        }
+    ],
+    "version": 4
+}
