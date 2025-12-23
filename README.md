@@ -1,4 +1,3 @@
-Ниже — готовый `README.md`, который можно положить в корень репозитория.
 # nrf52840-esb-ptx
 
 Пример проекта для **nRF52840 SuperMini**, демонстрирующий работу **Enhanced ShockBurst (ESB)** от Nordic Semiconductor в режиме **PTX (Primary Transmitter)**.
