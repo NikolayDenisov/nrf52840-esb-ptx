@@ -25,18 +25,18 @@ static nrf_esb_payload_t rx_payload;
 void nrf_esb_event_handler(nrf_esb_evt_t const *p_event) {
   switch (p_event->evt_id) {
   case NRF_ESB_EVENT_TX_SUCCESS:
-    NRF_LOG_DEBUG("TX SUCCESS EVENT");
+    NRF_LOG_INFO("TX SUCCESS EVENT");
     break;
   case NRF_ESB_EVENT_TX_FAILED:
-    NRF_LOG_DEBUG("TX FAILED EVENT");
+    NRF_LOG_INFO("TX FAILED EVENT");
     (void)nrf_esb_flush_tx();
     (void)nrf_esb_start_tx();
     break;
   case NRF_ESB_EVENT_RX_RECEIVED:
-    NRF_LOG_DEBUG("RX RECEIVED EVENT");
+    NRF_LOG_INFO("RX RECEIVED EVENT");
     while (nrf_esb_read_rx_payload(&rx_payload) == NRF_SUCCESS) {
       if (rx_payload.length > 0) {
-        NRF_LOG_DEBUG("RX RECEIVED PAYLOAD");
+        NRF_LOG_INFO("RX RECEIVED PAYLOAD");
       }
     }
     break;
@@ -86,25 +86,28 @@ uint32_t esb_init(void) {
   return err_code;
 }
 
+static void log_init(void) {
+  ret_code_t err_code = NRF_LOG_INIT(NULL);
+  APP_ERROR_CHECK(err_code);
+
+  NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
 int main(void) {
   ret_code_t err_code;
 
   gpio_init();
-
-  err_code = NRF_LOG_INIT(NULL);
-  APP_ERROR_CHECK(err_code);
-
-  NRF_LOG_DEFAULT_BACKENDS_INIT();
+  log_init();
 
   clocks_start();
 
   err_code = esb_init();
   APP_ERROR_CHECK(err_code);
 
-  NRF_LOG_DEBUG("Enhanced ShockBurst Transmitter Example started.");
+  NRF_LOG_INFO("Enhanced ShockBurst Transmitter Example started.");
 
   while (true) {
-    NRF_LOG_DEBUG("Transmitting packet %02x", tx_payload.data[1]);
+    NRF_LOG_INFO("Transmitting packet %02x", tx_payload.data[1]);
 
     tx_payload.noack = false;
     if (nrf_esb_write_payload(&tx_payload) == NRF_SUCCESS) {
@@ -120,6 +123,7 @@ int main(void) {
     } else {
       NRF_LOG_WARNING("Sending packet failed");
     }
+    NRF_LOG_FLUSH();
 
     nrf_delay_ms(5000);
   }

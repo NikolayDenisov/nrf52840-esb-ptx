@@ -3647,19 +3647,17 @@
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_UP 512
 #endif
 
-// <o> SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS - Maximum number of upstream
-// buffers.
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS - Size of upstream buffer.
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_UP_BUFFERS 2
 #endif
 
-// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN - Size of downstream buffer.
+// <o> SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN - Size of upstream buffer.
 #ifndef SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN
 #define SEGGER_RTT_CONFIG_BUFFER_SIZE_DOWN 16
 #endif
 
-// <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Maximum number of downstream
-// buffers.
+// <o> SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS - Size of upstream buffer.
 #ifndef SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS
 #define SEGGER_RTT_CONFIG_MAX_NUM_DOWN_BUFFERS 2
 #endif

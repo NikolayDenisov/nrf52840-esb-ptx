@@ -30,6 +30,7 @@ SRC_FILES += \
   $(SDK_ROOT)/external/fprintf/nrf_fprintf_format.c \
   $(SDK_ROOT)/components/libraries/memobj/nrf_memobj.c \
   $(SDK_ROOT)/components/libraries/ringbuf/nrf_ringbuf.c \
+  $(SDK_ROOT)/components/libraries/experimental_section_vars/nrf_section_iter.c \
   $(SDK_ROOT)/components/libraries/strerror/nrf_strerror.c \
   $(SDK_ROOT)/integration/nrfx/legacy/nrf_drv_uart.c \
   $(SDK_ROOT)/modules/nrfx/soc/nrfx_atomic.c \
@@ -51,8 +52,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/libraries/strerror \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
   $(SDK_ROOT)/components/libraries/util \
-  $(MDK_ROOT)/config \
-  ../config \
+  $(PROJ_DIR)/config \
   $(SDK_ROOT)/components/libraries/balloc \
   $(SDK_ROOT)/components/libraries/ringbuf \
   $(SDK_ROOT)/components/proprietary_rf/esb \
@@ -62,10 +62,10 @@ INC_FOLDERS += \
   $(SDK_ROOT)/modules/nrfx \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(SDK_ROOT)/integration/nrfx/legacy \
+  $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/libraries/delay \
   $(SDK_ROOT)/integration/nrfx \
   $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
-  $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/boards \
   $(SDK_ROOT)/components/libraries/memobj \
   $(SDK_ROOT)/modules/nrfx/drivers/include \
@@ -100,6 +100,7 @@ CFLAGS += -fno-builtin -fshort-enums
 
 # C++ flags common to all targets
 CXXFLAGS += $(OPT)
+
 # Assembler flags common to all targets
 ASMFLAGS += -g3
 ASMFLAGS += -mcpu=cortex-m4
@@ -107,11 +108,12 @@ ASMFLAGS += -mthumb -mabi=aapcs
 ASMFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
 ASMFLAGS += -DBOARD_CUSTOM
 ASMFLAGS += -DNRF52840_MDK
-ASMFLAGS += -DBSP_UART_SUPPORT
+ASMFLAGS += -DBSP_DEFINES_ONLY
 ASMFLAGS += -DCONFIG_GPIO_AS_PINRESET
 ASMFLAGS += -DESB_PRESENT
 ASMFLAGS += -DFLOAT_ABI_HARD
 ASMFLAGS += -DNRF52840_XXAA
+ASMFLAGS += -DSWI_DISABLE0
 
 # Linker flags
 LDFLAGS += $(OPT)
@@ -144,6 +146,8 @@ help:
 	@echo		nrf52840_xxaa
 	@echo		sdk_config - starting external tool for editing sdk_config.h
 	@echo		flash      - flashing binary
+	@echo   erase      - erase the whole chip flash
+	@echo   release    - generate binary
 
 TEMPLATE_PATH := $(SDK_ROOT)/components/toolchain/gcc
 
@@ -152,17 +156,23 @@ include $(TEMPLATE_PATH)/Makefile.common
 
 $(foreach target, $(TARGETS), $(call define_target, $(target)))
 
-.PHONY: flash erase
+.PHONY: flash erase copy
 
 # Flash the program
 flash: default
 	@echo Flashing: $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
 	pyocd flash -t nrf52840 $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex
+
 # Erase chip
 erase:
 	pyocd erase -t nrf52840 --chip
 
-SDK_CONFIG_FILE := ../config/sdk_config.h
+# Copy firmware to hex folder
+copy: default
+	@echo Copying: $(PROJECT_NAME).hex
+	cp $(OUTPUT_DIRECTORY)/nrf52840_xxaa.hex $(PROJ_DIR)/hex/$(PROJECT_NAME).hex
+
+SDK_CONFIG_FILE := $(PROJ_DIR)/config/sdk_config.h
 CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
 sdk_config:
 	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)
